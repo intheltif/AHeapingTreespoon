@@ -6,4 +6,4 @@
     Coming soon...
 ## Known Issues
     
-    There are currently no *known* issues
+    There are currently no known issues.

@@ -1,3 +1,5 @@
+from PathNode import PathNode
+
 class Heap:
     """ A heap. """
 
@@ -14,7 +16,7 @@ class Heap:
         def __init__(self):
             self.head = None
             self.tail = None
-    
+
     class Node:
         """
         A class to represent a node in our linked list
@@ -47,7 +49,7 @@ class Heap:
         with open(inputFile) as fileToRead:
             # recommended style for reading line by line. Memory efficient.
             for line in fileToRead:
-                node = self.PathNode()
+                node = PathNode()
                 node.setPath(line)
                 self.tempPath.append(node)
 

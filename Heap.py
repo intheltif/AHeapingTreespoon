@@ -1,9 +1,6 @@
 from PathNode import PathNode
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 3a0a4c973017243b1aed49c3270e9d14f82e6912
 class Heap:
     """ A heap. """
 

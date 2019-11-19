@@ -22,7 +22,7 @@ class PathNode:
         # True if the node is the right most node
         self.isLastNode = False
 
-    def getNodeSize(self):
+    def get_node_size(self):
         """
         Returns the length of the path list which represents the size of this
         node. The node size is used to determine the node's ID.
@@ -31,62 +31,62 @@ class PathNode:
         """
         return len(self.path)
 
-    def getPath(self):
+    def get_path(self):
         """
         Returns an array of vertex IDs ordered by appearence in the path
         """
         return self.path
 
-    def getLeftChild(self):
+    def get_left_child(self):
         """
         Return the left node in this tree.
         """
         return self.left
 
-    def getRightChild(self):
+    def get_right_child(self):
         """
         Return the right node in this tree.
         """
         return self.right
 
-    def getParent(self):
+    def get_parent(self):
         """
         Return the parent of this node.
         """
         return self.parent
 
-    def getGeneration(self):
+    def get_generation(self):
         """
         Returns the node directly to the right of this node on the same 
         tree level.
         """
         return self.generation
 
-    def setPath(self, path=[]):
+    def set_path(self, path=[]):
         """
         Returns an array of vertex IDs ordered by appearence in the path
         """
         self.path = path
 
-    def setLeftChild(self, node):
+    def set_left_child(self, node):
         """
         Return the left node in this tree.
         """
         self.left = node
 
-    def setRightChild(self, node):
+    def set_right_child(self, node):
         """
         Return the right node in this tree.
         """
         self.right = node
 
-    def setParent(self, node):
+    def set_parent(self, node):
        """
        Return the parent of this node.
        """
        self.parent = node
 
-    def setGeneration(self, node):
+    def set_generation(self, node):
         """
         Returns the node directly to the right of this node on the same 
         tree level.

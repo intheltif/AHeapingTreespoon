@@ -1,3 +1,6 @@
+from PathNode import PathNode
+
+
 class Heap:
     """ A heap. """
 
@@ -35,7 +38,7 @@ class Heap:
         """
         return self.tempPath
 
-    def read_paths(self, inputFile):
+    def read_paths(self, input_file):
         """ 
         Reads inputFile given at the command line and places the contents of 
         each line into the path field found in each PathNode object. The order 
@@ -46,11 +49,12 @@ class Heap:
 
         """
         # Open the file using 'with' keyword which auto closes file
-        with open(inputFile) as fileToRead:
+        with open(input_file) as file_to_read:
             # recommended style for reading line by line. Memory efficient.
-            for line in fileToRead:
-                node = self.PathNode()
-                node.setPath(line)
+            for line in file_to_read:
+                node = PathNode()
+                node.setPath(line.split())
+                node.set_path_len()
 
     def build_complete_tree(self, index, parent):
         """

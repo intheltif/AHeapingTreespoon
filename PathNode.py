@@ -4,6 +4,9 @@ class PathNode:
         # An array of vertex IDs ordered by appearance in the path
         self.path = []
 
+        # An integer value representing the length of the path
+        self.path_len = 0
+
         # Reference to the left child
         self.left = None
 
@@ -67,6 +70,14 @@ class PathNode:
         Returns an array of vertex IDs ordered by appearence in the path
         """
         self.path = path
+
+    def set_path_len(self):
+        """
+        Sets the length of the path field.
+
+        :return:
+        """
+        self.path_len = len(self.path) - 1
 
     def setLeftChild(self, node):
         """

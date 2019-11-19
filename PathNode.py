@@ -1,11 +1,11 @@
 class PathNode:
     """ A node in a tree data structure. """
-    def __init__(self):
+    def __init__(self, line):
         # An array of vertex IDs ordered by appearance in the path
-        self.path = []
+        self.path = line.split()
 
         # An integer value representing the length of the path
-        self.path_len = 0
+        self.path_len = len(self.path) - 1
 
         # Reference to the left child
         self.left = None
@@ -17,7 +17,10 @@ class PathNode:
         self.parent = None
 
         # Reference to the node directly to the right on the same tree level
-        self.generation = None # left to right sibling or cousion
+        self.generation = None # left to right sibling or cousin
+
+        # The number of children that this node has
+        self.num_children = 0
 
         # True if the node is the last in the level
         self.isLevelEnd = False
@@ -87,13 +90,17 @@ class PathNode:
 
     def set_right_child(self, node):
         """
-        Return the right node in this tree.
+        Set the right node in this tree.
+
+        :param node: The node to set the right child of this node to.
         """
         self.right = node
 
     def set_parent(self, node):
        """
-       Return the parent of this node.
+       Set the parent of this node.
+
+       :param node: The node to set the parent of this node to.
        """
        self.parent = node
 
@@ -101,5 +108,26 @@ class PathNode:
         """
         Returns the node directly to the right of this node on the same 
         tree level.
+
+        :param node: The node directly to the right of this node.
+        :return: None.
         """
         self.generation = node
+
+    def insert(self, line):
+        """
+        Inserts a new node into our tree.
+
+        :param line: The next line read from the file.
+        :return: None
+        """
+        if self.left is None:
+            self.left = PathNode(line)
+        elif self.right is None:
+            self.right = PathNode(line)
+        elif (self.left.num_children - self.right.num_children) > 1:
+            self.right.insert(line)
+        else:
+            self.left.insert(line)
+        self.num_children = self.num_children + 1
+

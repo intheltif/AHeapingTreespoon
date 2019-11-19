@@ -8,29 +8,10 @@ class Heap:
     #      documentation. This may need to be changed as well any instance
     #      or class variables may need to be adjusted.
     
-    # Creating a Linked List structure.
-    class LinkedList:
-        """
-        A class to represent our linked list
-        """
-    
-        def __init__(self):
-            self.head = None
-            self.tail = None
-
-    class Node:
-        """
-        A class to represent a node in our linked list
-        """
-        def __init__(self, path_data, path_len):
-            self.path_data = path_data
-            self.path_len = path_len
-            self.next = None
-
     # Temporary storage for the paths starting at tempPath[1]
     def __init__(self):
         self.tempPath = []
-        self.tree = self.LinkedList()
+        self.tree = None
 
     def get_temp_path(self):
         """
@@ -45,16 +26,16 @@ class Heap:
         is the same as found in the text file. Adds the PathNode object to the 
         tempPath starting at tempPath[1].
         
-        TODO Add paramater and return documentation
-
+        :param input_file: The file to read the data from.
         """
         # Open the file using 'with' keyword which auto closes file
         with open(input_file) as file_to_read:
             # recommended style for reading line by line. Memory efficient.
             for line in file_to_read:
-                node = PathNode()
-                node.setPath(line.split())
-                node.set_path_len()
+                if tree is None:
+                    tree = PathNode(line)
+                else:
+                    self.tree.insert(line)
 
     def build_complete_tree(self, index, parent):
         """

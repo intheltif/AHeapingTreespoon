@@ -37,13 +37,13 @@ class PathNode:
         """
         return self.path
 
-   def getLeftChild(self):
+    def getLeftChild(self):
         """
         Return the left node in this tree.
         """
         return self.left
 
-   def getRightChild(self):
+    def getRightChild(self):
         """
         Return the right node in this tree.
         """
@@ -68,23 +68,23 @@ class PathNode:
         """
         self.path = path
 
-   def setLeftChild(self, node):
+    def setLeftChild(self, node):
         """
         Return the left node in this tree.
         """
         self.left = node
 
-   def setRightChild(self, node):
+    def setRightChild(self, node):
         """
         Return the right node in this tree.
         """
         self.right = node
 
     def setParent(self, node):
-        """
-        Return the parent of this node.
-        """
-        self.parent = node
+       """
+       Return the parent of this node.
+       """
+       self.parent = node
 
     def setGeneration(self, node):
         """

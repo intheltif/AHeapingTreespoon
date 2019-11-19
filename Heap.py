@@ -33,7 +33,7 @@ class Heap:
         """
         return self.tempPath
 
-    def readPaths(inputFile):
+    def readPaths(self, inputFile):
         """ 
         Reads inputFile given at the command line and places the contents of 
         each line into the path field found in each PathNode object. The order 
@@ -44,16 +44,16 @@ class Heap:
 
         """
         # Open the file using 'with' keyword which auto closes file
-        with open(inputFile, r) as fileToRead:
+        with open(inputFile) as fileToRead:
             # recommended style for reading line by line. Memory efficient.
             for line in fileToRead:
-                node = PathNode()
+                node = self.PathNode()
                 node.setPath(line)
-                tempPath.append(node)
+                self.tempPath.append(node)
 
 
     
-    def buildCompleteTree(index, parent):
+    def buildCompleteTree(self, index, parent):
         """
         Recursively builds a complete binary tree. Places PathNode objects in 
         tempPath into a complete binary tree in order of appearance in the text 
@@ -66,7 +66,7 @@ class Heap:
         """
         # TODO Finish buildCompleteTree function
         
-    def setLevelEnd(root):
+    def setLevelEnd(self, root):
         """ 
         Recursive method that sets isLevelEnd.
 
@@ -75,7 +75,7 @@ class Heap:
 
         # TODO Finish setLevelEnd function
 
-    def setGenerationLinks(root):
+    def setGenerationLinks(self, root):
         """
         Recursive method that sets the "generation" link of PathNode object
         from left-to-right. Generatoin is a term used to indicate a node on
@@ -86,7 +86,7 @@ class Heap:
 
         # TODO Finish setGenerationLinks function
 
-    def printTreeLevels(root)
+    def printTreeLevels(self, root):
         """
         Prints the path lengths from left-to-right at each level in the tree in 
         the form specified by the instructions.

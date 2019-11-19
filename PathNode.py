@@ -121,11 +121,13 @@ class PathNode:
         :param line: The next line read from the file.
         :return: None
         """
+        child_diff = self.left.num_children - self.right.num_children
         if self.left is None:
             self.left = PathNode(line)
         elif self.right is None:
             self.right = PathNode(line)
-        elif (self.left.num_children - self.right.num_children) > 1:
+        # TODO Fix the bug that happens when we have child_dif == 1
+        elif child_diff > 1:
             self.right.insert(line)
         else:
             self.left.insert(line)

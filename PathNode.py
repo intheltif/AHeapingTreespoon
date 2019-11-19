@@ -22,6 +22,15 @@ class PathNode:
         # True if the node is the right most node
         self.isLastNode = False
 
+    def getNodeSize(self):
+        """
+        Returns the length of the path list which represents the size of this
+        node. The node size is used to determine the node's ID.
+        
+        TODO Add in param/return documentation
+        """
+        return len(self.path)
+
     def getPath(self):
         """
         Returns an array of vertex IDs ordered by appearence in the path

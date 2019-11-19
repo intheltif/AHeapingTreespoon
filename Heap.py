@@ -4,6 +4,24 @@ class Heap:
     # TODO Most of the stuff below is just stubs for methods and accompanying 
     #      documentation. This may need to be changed as well any instance
     #      or class variables may need to be adjusted.
+    
+    # Creating a Linked List structure.
+    class LinkedList:
+        """
+        A class to represent our linked list
+        """
+    
+        def __init__(self):
+            self.head = None
+            self.tail = None
+    
+    class Node:
+        """
+        A class to represent a node in our linked list
+        """
+        def __init__(self, data):
+            self.data = data
+            self.next = None
 
     # Temporary storage for the paths starting at tempPath[1]
     def __init__(self):
@@ -25,7 +43,15 @@ class Heap:
         TODO Add paramater and return documentation
 
         """
-        # TODO Finish readPaths function
+        # Open the file using 'with' keyword which auto closes file
+        with open(inputFile, r) as fileToRead:
+            # recommended style for reading line by line. Memory efficient.
+            for line in fileToRead:
+                node = PathNode()
+                node.setPath(line)
+                tempPath.append(node)
+
+
     
     def buildCompleteTree(index, parent):
         """

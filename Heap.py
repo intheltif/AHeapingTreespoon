@@ -19,21 +19,23 @@ class Heap:
         """
         A class to represent a node in our linked list
         """
-        def __init__(self, data):
-            self.data = data
+        def __init__(self, path_data, path_len):
+            self.path_data = path_data
+            self.path_len = path_len
             self.next = None
 
     # Temporary storage for the paths starting at tempPath[1]
     def __init__(self):
         self.tempPath = []
+        self.tree = self.LinkedList()
 
-    def getTempPath(self):
+    def get_temp_path(self):
         """
         Returns the temporary path
         """
         return self.tempPath
 
-    def readPaths(self, inputFile):
+    def read_paths(self, inputFile):
         """ 
         Reads inputFile given at the command line and places the contents of 
         each line into the path field found in each PathNode object. The order 
@@ -49,11 +51,8 @@ class Heap:
             for line in fileToRead:
                 node = self.PathNode()
                 node.setPath(line)
-                self.tempPath.append(node)
 
-
-    
-    def buildCompleteTree(self, index, parent):
+    def build_complete_tree(self, index, parent):
         """
         Recursively builds a complete binary tree. Places PathNode objects in 
         tempPath into a complete binary tree in order of appearance in the text 
@@ -66,7 +65,7 @@ class Heap:
         """
         # TODO Finish buildCompleteTree function
         
-    def setLevelEnd(self, root):
+    def set_level_end(self, root):
         """ 
         Recursive method that sets isLevelEnd.
 
@@ -75,7 +74,7 @@ class Heap:
 
         # TODO Finish setLevelEnd function
 
-    def setGenerationLinks(self, root):
+    def set_generation_links(self, root):
         """
         Recursive method that sets the "generation" link of PathNode object
         from left-to-right. Generatoin is a term used to indicate a node on
@@ -86,7 +85,7 @@ class Heap:
 
         # TODO Finish setGenerationLinks function
 
-    def printTreeLevels(self, root):
+    def print_tree_levels(self, root):
         """
         Prints the path lengths from left-to-right at each level in the tree in 
         the form specified by the instructions.

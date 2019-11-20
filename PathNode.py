@@ -39,7 +39,7 @@ class PathNode:
 
     def get_path(self):
         """
-        Returns an array of vertex IDs ordered by appearence in the path
+        Returns an array of vertex IDs ordered by appearance in the path
         """
         return self.path
 
@@ -70,21 +70,21 @@ class PathNode:
 
     def set_path(self, path=[]):
         """
-        Returns an array of vertex IDs ordered by appearence in the path
+        Set a list of vertex IDs ordered by appearance in the path
+
+        :param path: A list of vertex IDs ordered by appearance in the path.
         """
         self.path = path
 
     def set_path_len(self):
         """
-        Sets the length of the path field.
-
-        :return:
+        Set the number of vertices in path which is the length of the path - 1.
         """
         self.path_len = len(self.path) - 1
 
     def set_left_child(self, node):
         """
-        Return the left node in this tree.
+        Set the left node in this tree.
         """
         self.left = node
 
@@ -97,29 +97,27 @@ class PathNode:
         self.right = node
 
     def set_parent(self, node):
-       """
-       Set the parent of this node.
+        """
+        Set the parent of this node.
 
-       :param node: The node to set the parent of this node to.
-       """
-       self.parent = node
+        :param node: The node to set the parent of this node to.
+        """
+        self.parent = node
 
     def set_generation(self, node):
         """
-        Returns the node directly to the right of this node on the same 
+        Set the node directly to the right of this node on the same
         tree level.
 
         :param node: The node directly to the right of this node.
-        :return: None.
         """
         self.generation = node
 
     def insert(self, line):
         """
-        Inserts a new node into our tree.
+        Insert a new node into our tree.
 
         :param line: The next line read from the file.
-        :return: None
         """
         child_diff = self.left.num_children - self.right.num_children
         if self.left is None:

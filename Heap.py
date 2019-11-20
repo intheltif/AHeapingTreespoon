@@ -15,7 +15,8 @@ class Heap:
 
     def get_temp_path(self):
         """
-        Returns the temporary path
+        Returns the temporary path.
+        :return: The temporary path class variable.
         """
         return self.tempPath
 
@@ -45,8 +46,8 @@ class Heap:
         tempPath[2 * index] and the right child is found at 
         tempPath[(2 * index) + 1].
 
-        TODO Add paramater and return documentation
-
+        :param index: The current index in the tree. TODO Is that right?
+        :param parent: The node that is the parent of this node.
         """
         # TODO Finish buildCompleteTree function
         
@@ -54,7 +55,7 @@ class Heap:
         """ 
         Recursive method that sets isLevelEnd.
 
-        TODO Add parameter documentation
+        :param root: The root node of this tree or subtree.
         """
 
         # TODO Finish setLevelEnd function
@@ -65,7 +66,7 @@ class Heap:
         from left-to-right. Generatoin is a term used to indicate a node on
         the same level (these may be siblings or cousions).
 
-        TODO Add parameter documentation
+        :param root: The root node of this tree or subtree.
         """
 
         # TODO Finish setGenerationLinks function
@@ -75,7 +76,7 @@ class Heap:
         Prints the path lengths from left-to-right at each level in the tree in 
         the form specified by the instructions.
 
-        TODO Add parameter documentation.
+        :param root: The root node of this tree or subtree.
         """
 
         # TODO Finish printTreeLevels function

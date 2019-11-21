@@ -33,10 +33,18 @@ class Heap:
         with open(input_file) as file_to_read:
             # recommended style for reading line by line. Memory efficient.
             for line in file_to_read:
-                if tree is None:
-                    tree = PathNode(line)
-                else:
-                    self.tree.insert(line)
+                self.tempPath.append(PathNode(line))
+                # if the list is a multiple of 3, we can set parent, left, right.
+                if (len(self.tempPath) % 3) == 0:
+                    # Get the unset nodes
+                    parent = self.tempPath[-3]
+                    left_child = self.tempPath[-2]
+                    right_child = self.tempPath[-1]
+                    # Set their parent/child status based on position in list
+                    parent.set_left_child(left_child)
+                    parent.set_right_child(right_child)
+                    left_child.set_parent(parent)
+                    right_child.set_parent(parent)
 
     def build_complete_tree(self, index, parent):
         """

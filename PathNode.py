@@ -112,13 +112,13 @@ class PathNode:
         :param node: The node directly to the right of this node.
         """
         self.generation = node
-
+"""
     def insert(self, line):
-        """
+        
         Insert a new node into our tree.
 
         :param line: The next line read from the file.
-        """
+        
         child_diff = self.left.num_children - self.right.num_children
         if self.left is None:
             self.left = PathNode(line)
@@ -131,3 +131,4 @@ class PathNode:
             self.left.insert(line)
         self.num_children = self.num_children + 1
 
+"""

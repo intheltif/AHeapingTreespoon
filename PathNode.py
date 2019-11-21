@@ -23,10 +23,10 @@ class PathNode:
         self.num_children = 0
 
         # True if the node is the last in the level
-        self.isLevelEnd = False
+        self.is_level_end = False
 
         # True if the node is the right most node
-        self.isLastNode = False
+        self.is_last_node = False
 
     def get_node_size(self):
         """
@@ -112,6 +112,15 @@ class PathNode:
         :param node: The node directly to the right of this node.
         """
         self.generation = node
+
+    def set_level_end(self, boolean):
+
+        self.is_level_end = boolean
+
+    def set_is_last_node(self, boolean):
+
+        self.is_last_node = boolean
+
 """
     def insert(self, line):
         

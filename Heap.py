@@ -32,6 +32,9 @@ class Heap:
         
         :param input_file: The file to read the data from.
         """
+        # FIXME: Takes in all paths but only builds the first two levels of the tree
+        # Note to Evert: Should we just have this function take in the list and then
+        #                write another function to turn the list into a binary tree
         # Open the file using 'with' keyword which auto closes file
         with open(input_file) as file_to_read:
             # recommended style for reading line by line. Memory efficient.

@@ -68,6 +68,12 @@ class Heap:
         """
         pass
         # TODO Finish buildCompleteTree function
+
+    def heapify(self):
+        """
+        Converts our binary tree into a minimum, binary heap
+        """
+        pass
         
     def set_level_end(self, root):
         """ 

@@ -66,6 +66,7 @@ class Heap:
         :param index: The current index in the tree. TODO Is that right?
         :param parent: The node that is the parent of this node.
         """
+        pass
         # TODO Finish buildCompleteTree function
         
     def set_level_end(self, root):
@@ -74,18 +75,18 @@ class Heap:
 
         :param root: The root node of this tree or subtree.
         """
-
+        pass
         # TODO Finish setLevelEnd function
 
     def set_generation_links(self, root):
         """
         Recursive method that sets the "generation" link of PathNode object
-        from left-to-right. Generatoin is a term used to indicate a node on
-        the same level (these may be siblings or cousions).
+        from left-to-right. Generation is a term used to indicate a node on
+        the same level (these may be siblings or cousins).
 
         :param root: The root node of this tree or subtree.
         """
-
+        pass
         # TODO Finish setGenerationLinks function
 
     def print_tree_levels(self, root):
@@ -95,5 +96,5 @@ class Heap:
 
         :param root: The root node of this tree or subtree.
         """
-
+        pass
         # TODO Finish printTreeLevels function

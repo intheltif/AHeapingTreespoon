@@ -13,6 +13,9 @@ class Heap:
         self.temp_path = []
         self.tree = None
 
+    def go(self, input_file):
+        self.read_paths(input_file)
+
     def get_temp_path(self):
         """
         Returns the temporary path.

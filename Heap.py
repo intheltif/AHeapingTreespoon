@@ -21,6 +21,9 @@ class Heap:
         self.build_complete_tree(first, root_index)
         self.print_tree_levels()
 
+    def go(self, input_file):
+        self.read_paths(input_file)
+
     def get_temp_path(self):
         """
         Returns the temporary path.
@@ -37,6 +40,9 @@ class Heap:
         
         :param input_file: The file to read the data from.
         """
+        # FIXME: Takes in all paths but only builds the first two levels of the tree
+        # Note to Evert: Should we just have this function take in the list and then
+        #                write another function to turn the list into a binary tree
         # Open the file using 'with' keyword which auto closes file
         with open(input_file) as file_to_read:
             for line in file_to_read:
@@ -65,25 +71,24 @@ class Heap:
 
         self.build_complete_tree(index+1, self.temp_path[index+1])
 
-
     def set_level_end(self, root):
         """ 
         Recursive method that sets isLevelEnd.
 
         :param root: The root node of this tree or subtree.
         """
-
+        pass
         # TODO Finish setLevelEnd function
 
     def set_generation_links(self, root):
         """
         Recursive method that sets the "generation" link of PathNode object
-        from left-to-right. Generatoin is a term used to indicate a node on
-        the same level (these may be siblings or cousions).
+        from left-to-right. Generation is a term used to indicate a node on
+        the same level (these may be siblings or cousins).
 
         :param root: The root node of this tree or subtree.
         """
-
+        pass
         # TODO Finish setGenerationLinks function
 
     def print_tree_levels(self, root):

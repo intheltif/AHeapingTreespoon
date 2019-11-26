@@ -21,9 +21,6 @@ class Heap:
         self.build_complete_tree(first, root_index)
         self.print_tree_levels()
 
-    def go(self, input_file):
-        self.read_paths(input_file)
-
     def get_temp_path(self):
         """
         Returns the temporary path.
@@ -59,17 +56,21 @@ class Heap:
         :param index: Index of the current node in temp_path
         :param parent: index of the parent of the current node
         """
-        left_index = 2*index
-        right_index = (2*index)+1
+        left_index = (2*index)-1
+        right_index = 2 * index
 
         if not left_index >= len(self.temp_path):
             self.temp_path[parent].set_left_child(self.temp_path[left_index])
-            self.temp_path[left_index].set_parent(parent)
+            # self.temp_path[left_index].set_parent(parent)
+            self.temp_path[left_index].set_parent(self.temp_path[parent])
         if not right_index >= len(self.temp_path):
             self.temp_path[parent].set_right_child(self.temp_path[right_index])
-            self.temp_path[right_index].set_parent(parent)
+            # self.temp_path[right_index].set_parent(parent)
+            self.temp_path[right_index].set_parent(self.temp_path[parent])
 
-        self.build_complete_tree(index+1, self.temp_path[index+1])
+        # self.build_complete_tree(index+1, self.temp_path[index+1])
+        if index <= len(self.temp_path):
+            self.build_complete_tree(index+1, index)
 
     def set_level_end(self, root):
         """ 
@@ -101,3 +102,4 @@ class Heap:
         print("---------- Before Heapify ----------")
 
         print("---------- After Heapify ----------")
+

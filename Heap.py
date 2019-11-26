@@ -1,5 +1,5 @@
+from __future__ import print_function
 from PathNode import PathNode
-
 
 class Heap:
     """ A heap. """
@@ -20,6 +20,7 @@ class Heap:
         self.read_paths(input_file)
         self.build_complete_tree(first, root_index)
         self.set_level_end()
+        self.set_last_node()
         self.print_tree_levels()
 
     def get_temp_path(self):
@@ -94,6 +95,11 @@ class Heap:
         pass
         # TODO Finish setGenerationLinks function
 
+    def set_last_node(self):
+        self.temp_path[-1].is_last_node = True
+        # last node in the tree must also be the last node of its level
+        self.temp_path[-1].is_level_end = True
+
     def print_tree_levels(self):
         """
         Prints the path lengths from left-to-right at each level in the tree in 
@@ -103,4 +109,6 @@ class Heap:
         """
         # temporarily just print every node
         for node in self.temp_path:
-            print(node)
+            print(node, end='')
+            if node.is_level_end or node.is_last_node:
+                print()

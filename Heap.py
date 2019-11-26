@@ -19,6 +19,7 @@ class Heap:
         first = 1
         self.read_paths(input_file)
         self.build_complete_tree(first, root_index)
+        self.set_level_end()
         self.print_tree_levels()
 
     def get_temp_path(self):
@@ -61,25 +62,26 @@ class Heap:
 
         if not left_index >= len(self.temp_path):
             self.temp_path[parent].set_left_child(self.temp_path[left_index])
-            # self.temp_path[left_index].set_parent(parent)
             self.temp_path[left_index].set_parent(self.temp_path[parent])
         if not right_index >= len(self.temp_path):
             self.temp_path[parent].set_right_child(self.temp_path[right_index])
-            # self.temp_path[right_index].set_parent(parent)
             self.temp_path[right_index].set_parent(self.temp_path[parent])
 
         # self.build_complete_tree(index+1, self.temp_path[index+1])
         if index <= len(self.temp_path):
             self.build_complete_tree(index+1, index)
 
-    def set_level_end(self, root):
+    def set_level_end(self):
         """ 
         Recursive method that sets isLevelEnd.
 
         :param root: The root node of this tree or subtree.
         """
-        pass
-        # TODO Finish setLevelEnd function
+        current_node = self.temp_path[0]
+        current_node.is_level_end = True
+        while not current_node.right == None:
+            current_node = current_node.right
+            current_node.is_level_end = True
 
     def set_generation_links(self, root):
         """

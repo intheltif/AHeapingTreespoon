@@ -121,14 +121,17 @@ class PathNode:
 
         self.is_last_node = boolean
 
-    def print_self(self):
+    def __str__(self):
 
         verts = ""
 
         for num in self.path:
             verts += num + ","
+        
+        # remove the last comma
+        verts = verts[:-1]
 
-        print(""+ str(self.path_len) + "(" + verts + "), ")
+        return ""+ str(self.path_len) + " (" + verts + ") "
 """
     def insert(self, line):
         

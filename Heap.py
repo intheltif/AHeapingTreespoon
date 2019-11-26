@@ -92,14 +92,13 @@ class Heap:
         pass
         # TODO Finish setGenerationLinks function
 
-    def print_tree_levels(self, root):
+    def print_tree_levels(self):
         """
         Prints the path lengths from left-to-right at each level in the tree in 
         the form specified by the instructions.
 
         :param root: The root node of this tree or subtree.
         """
-        print("---------- Before Heapify ----------")
-
-        print("---------- After Heapify ----------")
-
+        # temporarily just print every node
+        for node in self.temp_path:
+            print(node)

@@ -7,11 +7,19 @@ class Heap:
     # TODO Most of the stuff below is just stubs for methods and accompanying 
     #      documentation. This may need to be changed as well any instance
     #      or class variables may need to be adjusted.
-    
+
     # Temporary storage for the paths starting at temp_path[1]
     def __init__(self):
+        # Create a temp_path with None as first element so that
+        # build_complete_tree math will work correctly.
         self.temp_path = []
-        self.tree = None
+
+    def go(self, input_file):
+        root_index = 0
+        first = 1
+        self.read_paths(input_file)
+        self.build_complete_tree(first, root_index)
+        self.print_tree_levels()
 
     def get_temp_path(self):
         """
@@ -31,23 +39,8 @@ class Heap:
         """
         # Open the file using 'with' keyword which auto closes file
         with open(input_file) as file_to_read:
-            # recommended style for reading line by line. Memory efficient.
             for line in file_to_read:
                 self.temp_path.append(PathNode(line))
-                # if the list is a multiple of 3, we can set parent, left, right.
-                if (len(self.temp_path) % 3) == 0:
-                    # Get the unset nodes
-                    parent = self.temp_path[-3]
-                    left_child = self.temp_path[-2]
-                    right_child = self.temp_path[-1]
-                    # Set their parent/child status based on position in list
-                    parent.set_left_child(left_child)
-                    parent.set_right_child(right_child)
-                    left_child.set_parent(parent)
-                    right_child.set_parent(parent)
-                    right_child.set_level_end(True)
-            last_node = self.temp_path[-1]
-            last_node.set_is_last_node(True)
 
     def build_complete_tree(self, index, parent):
         """
@@ -57,11 +50,22 @@ class Heap:
         temp_path[2 * index] and the right child is found at
         temp_path[(2 * index) + 1].
 
-        :param index: The current index in the tree. TODO Is that right?
-        :param parent: The node that is the parent of this node.
+        :param index: Index of the current node in temp_path
+        :param parent: index of the parent of the current node
         """
-        # TODO Finish buildCompleteTree function
-        
+        left_index = 2*index
+        right_index = (2*index)+1
+
+        if not left_index >= len(self.temp_path):
+            self.temp_path[parent].set_left_child(self.temp_path[left_index])
+            self.temp_path[left_index].set_parent(parent)
+        if not right_index >= len(self.temp_path):
+            self.temp_path[parent].set_right_child(self.temp_path[right_index])
+            self.temp_path[right_index].set_parent(parent)
+
+        self.build_complete_tree(index+1, self.temp_path[index+1])
+
+
     def set_level_end(self, root):
         """ 
         Recursive method that sets isLevelEnd.
@@ -89,5 +93,6 @@ class Heap:
 
         :param root: The root node of this tree or subtree.
         """
+        print("---------- Before Heapify ----------")
 
-        # TODO Finish printTreeLevels function
+        print("---------- After Heapify ----------")

@@ -111,4 +111,4 @@ class Heap:
         for node in self.temp_path:
             print(node, end='')
             if node.is_level_end or node.is_last_node:
-                print()
+                print()  # print a new line

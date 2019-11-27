@@ -21,6 +21,8 @@ class Heap:
         self.build_complete_tree(first, root_index)
         self.set_level_end()
         self.set_last_node()
+
+        print('---------- Before Heapify ----------')
         self.print_tree_levels()
 
     def get_temp_path(self):
@@ -107,8 +109,13 @@ class Heap:
 
         :param root: The root node of this tree or subtree.
         """
-        # temporarily just print every node
+        print('Root:     ', end='')
+        current_level = 0
         for node in self.temp_path:
             print(node, end='')
             if node.is_level_end or node.is_last_node:
                 print()  # print a new line
+                current_level += 1
+                print('Level ' + str(current_level) + ':  ', end='')
+            else:
+                print('--> ', end='')

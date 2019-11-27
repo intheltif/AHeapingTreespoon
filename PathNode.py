@@ -131,7 +131,7 @@ class PathNode:
         # remove the last comma
         verts = verts[:-1]
 
-        return ""+ str(self.path_len) + " (" + verts + ") "
+        return ""+ str(self.path_len) + "(" + verts + ") "
 """
     def insert(self, line):
         

@@ -113,9 +113,11 @@ class Heap:
         current_level = 0
         for node in self.temp_path:
             print(node, end='')
-            if node.is_level_end or node.is_last_node:
+            if node.is_level_end and not node.is_last_node:
                 print()  # print a new line
                 current_level += 1
                 print('Level ' + str(current_level) + ':  ', end='')
-            else:
+            elif not node.is_last_node:
                 print('--> ', end='')
+            else:
+                print()  # print a new line

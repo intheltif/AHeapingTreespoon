@@ -141,3 +141,4 @@ class Heap:
             self.heapify(node.right)
         if (not node.parent == None) and node.path_len < node.parent.path_len:
             # TODO: Do the heaping
+            pass

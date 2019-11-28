@@ -10,8 +10,6 @@ def main():
     heap = Heap()
     heap.go(str(sys.argv[1]))
 
-    print('Running completed')
-
 
 if __name__ == '__main__':
     main()

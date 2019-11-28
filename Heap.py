@@ -24,6 +24,13 @@ class Heap:
 
         print('---------- Before Heapify ----------')
         self.print_tree_levels()
+        print()  # newline
+
+        self.heapify()
+
+        print('---------- After Heapify ----------')
+        self.print_tree_levels()
+        
 
     def get_temp_path(self):
         """
@@ -121,3 +128,6 @@ class Heap:
                 print('--> ', end='')
             else:
                 print()  # print a new line
+
+    def heapify(self):
+        pass

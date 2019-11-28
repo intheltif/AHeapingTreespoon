@@ -26,7 +26,7 @@ class Heap:
         self.print_tree_levels()
         print()  # newline
 
-        self.heapify()
+        self.heapify(self.temp_path[0])
 
         print('---------- After Heapify ----------')
         self.print_tree_levels()
@@ -129,5 +129,15 @@ class Heap:
             else:
                 print()  # print a new line
 
-    def heapify(self):
-        pass
+    def heapify(self, node):
+        """
+        Translates our binary tree into a minimum binary heap
+
+        :param node: The node we are currently heapifying
+        """
+        if not node.left == None:
+            self.heapify(node.left)
+        if not node.right == None:
+            self.heapify(node.right)
+        if (not node.parent == None) and node.path_len < node.parent.path_len:
+            # TODO: Do the heaping

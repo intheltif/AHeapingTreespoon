@@ -132,6 +132,10 @@ class PathNode:
         verts = verts[:-1]
 
         return ""+ str(self.path_len) + "(" + verts + ") "
+    
+    def __eq__(self, other):
+        return self.path == other.path
+
 """
     def insert(self, line):
         

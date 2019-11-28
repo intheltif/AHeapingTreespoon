@@ -89,7 +89,7 @@ class Heap:
         """
         current_node = self.temp_path[0]
         current_node.is_level_end = True
-        while not current_node.right == None:
+        while not current_node.right is None:
             current_node = current_node.right
             current_node.is_level_end = True
 
@@ -129,16 +129,50 @@ class Heap:
             else:
                 print()  # print a new line
 
+    def find_node_index(self, node):
+        for i in range(len(self.temp_path)):
+            if node == self.temp_path[i]:
+                return i
+
     def heapify(self, node):
         """
         Translates our binary tree into a minimum binary heap
 
         :param node: The node we are currently heapifying
         """
-        if not node.left == None:
+        if not node.left is None:
             self.heapify(node.left)
-        if not node.right == None:
+        if not node.right is None:
             self.heapify(node.right)
-        if (not node.parent == None) and node.path_len < node.parent.path_len:
-            # TODO: Do the heaping
-            pass
+        if (not node.parent is None) and node.path_len < node.parent.path_len:
+            # get the indices of the nodes
+            child_index = self.find_node_index(node)
+            parent_index = self.find_node_index(node.parent)
+
+            # store all of the child's pointers into temporary variables
+            temp_left = node.left
+            temp_right = node.right
+            temp_parent = node.parent
+            temp_is_last_node = node.is_last_node
+            temp_is_level_end = node.is_level_end
+
+            # move all of the parent's pointers to the child
+            node.left = node.parent.left
+            node.right = node.parent.right
+            node.parent = node.parent.parent
+            node.is_last_node = node.parent.is_last_node
+            node.is_level_end = node.parent.is_level_end
+
+            # move all of the temp's pointers to the parent
+            node.parent.left = temp_left
+            node.parent.right = temp_right
+            node.parent.parent = temp_parent
+            node.parent.is_last_node = temp_is_last_node
+            node.parent.is_level_end = temp_is_level_end
+
+            # switch the node's indices in the list
+            tmp = self.temp_path[child_index]
+            self.temp_path[child_index] = self.temp_path[parent_index]
+            self.temp_path[parent_index] = tmp
+
+            

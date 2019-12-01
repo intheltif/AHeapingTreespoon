@@ -1,6 +1,8 @@
 from __future__ import print_function
 from PathNode import PathNode
 
+import pdb
+
 class Heap:
     """ A heap. """
 
@@ -175,4 +177,15 @@ class Heap:
             self.temp_path[child_index] = self.temp_path[parent_index]
             self.temp_path[parent_index] = tmp
 
-            
+            # update child information
+            if not node.left is None:
+                node.left.parent = node
+            if not node.right is None:
+                node.right.parent = node
+
+            # reassign the node's new parent's children data
+            if not node.parent is None:
+                if node.parent.left == node.left or node.parent.left == node.right:
+                    node.parent.left = node
+                elif node.parent.right == node.left or node.parent.right == node.right:
+                    node.parent.right = node

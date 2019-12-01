@@ -134,6 +134,8 @@ class PathNode:
         return ""+ str(self.path_len) + "(" + verts + ") "
     
     def __eq__(self, other):
+        if other is None:
+            return False
         return self.path == other.path
 
 """

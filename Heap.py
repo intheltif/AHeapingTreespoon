@@ -142,35 +142,39 @@ class Heap:
 
         :param node: The node we are currently heapifying
         """
+        # pdb.set_trace()
         if not node.left is None:
             self.heapify(node.left)
         if not node.right is None:
             self.heapify(node.right)
         if (not node.parent is None) and node.path_len < node.parent.path_len:
+            # store the parent to avoid corruption as we swap
+            parent = node.parent
+
             # get the indices of the nodes
             child_index = self.find_node_index(node)
-            parent_index = self.find_node_index(node.parent)
+            parent_index = self.find_node_index(parent)
 
             # store all of the child's pointers into temporary variables
             temp_left = node.left
             temp_right = node.right
-            temp_parent = node.parent
+            temp_parent = parent
             temp_is_last_node = node.is_last_node
             temp_is_level_end = node.is_level_end
 
             # move all of the parent's pointers to the child
-            node.left = node.parent.left
-            node.right = node.parent.right
-            node.parent = node.parent.parent
-            node.is_last_node = node.parent.is_last_node
-            node.is_level_end = node.parent.is_level_end
+            node.left = parent.left
+            node.right = parent.right
+            node.parent = parent.parent
+            node.is_last_node = parent.is_last_node
+            node.is_level_end = parent.is_level_end
 
             # move all of the temp's pointers to the parent
-            node.parent.left = temp_left
-            node.parent.right = temp_right
-            node.parent.parent = temp_parent
-            node.parent.is_last_node = temp_is_last_node
-            node.parent.is_level_end = temp_is_level_end
+            parent.left = temp_left
+            parent.right = temp_right
+            parent.parent = temp_parent
+            parent.is_last_node = temp_is_last_node
+            parent.is_level_end = temp_is_level_end
 
             # switch the node's indices in the list
             tmp = self.temp_path[child_index]

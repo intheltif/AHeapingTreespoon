@@ -1,7 +1,6 @@
 from __future__ import print_function
 from PathNode import PathNode
 
-import pdb
 
 class Heap:
     """ A heap. """
@@ -32,7 +31,6 @@ class Heap:
 
         print('---------- After Heapify ----------')
         self.print_tree_levels()
-        
 
     def get_temp_path(self):
         """
@@ -69,7 +67,7 @@ class Heap:
         :param index: Index of the current node in temp_path
         :param parent: index of the parent of the current node
         """
-        left_index = (2*index)-1
+        left_index = (2 * index) - 1
         right_index = 2 * index
 
         if not left_index >= len(self.temp_path):
@@ -81,17 +79,15 @@ class Heap:
 
         # self.build_complete_tree(index+1, self.temp_path[index+1])
         if index <= len(self.temp_path):
-            self.build_complete_tree(index+1, index)
+            self.build_complete_tree(index + 1, index)
 
     def set_level_end(self):
         """ 
         Recursive method that sets isLevelEnd.
-
-        :param root: The root node of this tree or subtree.
         """
         current_node = self.temp_path[0]
         current_node.is_level_end = True
-        while not current_node.right is None:
+        while current_node.right is not None:
             current_node = current_node.right
             current_node.is_level_end = True
 
@@ -115,8 +111,6 @@ class Heap:
         """
         Prints the path lengths from left-to-right at each level in the tree in 
         the form specified by the instructions.
-
-        :param root: The root node of this tree or subtree.
         """
         print('Root:     ', end='')
         current_level = 0
@@ -143,11 +137,11 @@ class Heap:
         :param node: The node we are currently heapifying
         """
         # pdb.set_trace()
-        if not node.left is None:
+        if node.left is not None:
             self.heapify(node.left)
-        if not node.right is None:
+        if node.right is not None:
             self.heapify(node.right)
-        if (not node.parent is None) and node.path_len < node.parent.path_len:
+        if (node.parent is not None) and node.path_len < node.parent.path_len:
             # store the parent to avoid corruption as we swap
             parent = node.parent
 
@@ -182,13 +176,13 @@ class Heap:
             self.temp_path[parent_index] = tmp
 
             # update child information
-            if not node.left is None:
+            if node.left is not None:
                 node.left.parent = node
-            if not node.right is None:
+            if node.right is not None:
                 node.right.parent = node
 
             # reassign the node's new parent's children data
-            if not node.parent is None:
+            if node.parent is not None:
                 if node.parent.left == node.left or node.parent.left == node.right:
                     node.parent.left = node
                 elif node.parent.right == node.left or node.parent.right == node.right:

@@ -24,14 +24,15 @@ class Heap:
         self.set_root()
         self.set_level_end()
         self.set_last_node()
-        self.set_generation_links(self.temp_path[0])
+        self.set_generation_links(self.root)
         self.set_parents(self.root)
 
         print('---------- Before Heapify ----------')
         self.print_tree_levels(self.root, 0)
         print()  # newline
 
-        self.heapify(self.temp_path[0])
+        self.heapify(self.root)
+        self.set_generation_links(self.root)
 
         print('---------- After Heapify ----------')
         self.print_tree_levels(self.root, 0)
@@ -194,6 +195,7 @@ class Heap:
     #         current = current.generation
 
         current = root
+        previous = None
 
         # while we are not on the deepest level
         while current.left.left is not None:
@@ -204,11 +206,13 @@ class Heap:
         while current is not None:
             print(current)
             next_node = current.generation
-            self.should_swap(current)
+            self.should_swap(current, previous)
             if current.generation is None:
                 current = next_level_above
                 next_level_above = current.parent
+                previous = None
             else:
+                previous = current
                 current = next_node
 
         
@@ -230,8 +234,9 @@ class Heap:
         else:
             return node.path_len
     
-    def swap_nodes(self, parent, child):
+    def swap_nodes(self, parent, child, previous):
         # have the nodes switch places in the heap
+
         if parent.left == child:
             child.parent = parent.parent
             child.left, parent.left = parent, child.left
@@ -260,17 +265,25 @@ class Heap:
         if child.is_root:
             self.root = child
 
-    def should_swap(self, node):
+    def should_swap(self, node, previous):
         left_weight = self.find_weight(node.left)
         right_weight = self.find_weight(node.right)
         current_weight = self.find_weight(node)
         min_weight = min(left_weight, right_weight, current_weight)
 
         if min_weight == left_weight and not min_weight == current_weight:
-            self.swap_nodes(node, node.left)
-            self.should_swap(node)
+            self.swap_in_list(node, node.left)
+            self.swap_nodes(node, node.left, previous)
+            self.should_swap(node, previous)
         elif min_weight == right_weight and not min_weight == current_weight:
-            self.swap_nodes(node, node.right)
-            self.should_swap(node)
+            self.swap_in_list(node, node.right)
+            self.swap_nodes(node, node.right, previous)
+            self.should_swap(node, previous)
+        
+    def swap_in_list(self, first_node, second_node):
+        first_node_index = self.find_node_index(first_node)
+        second_node_index = self.find_node_index(second_node)
+        self.temp_path[first_node_index] = second_node
+        self.temp_path[second_node_index] = first_node
             
 # BUG: (0,4,1,2,3) and (0, 2, 3) are not swapping

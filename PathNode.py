@@ -39,31 +39,39 @@ class PathNode:
         Returns the length of the path list which represents the size of this
         node. The node size is used to determine the node's ID.
         
-        TODO Add in param/return documentation
+        :return: the length of the path
         """
         return len(self.path)
 
     def get_path(self):
         """
         Returns an array of vertex IDs ordered by appearance in the path
+
+        :return: self.path
         """
         return self.path
 
     def get_left_child(self):
         """
         Return the left node in this tree.
+
+        :return: self.left
         """
         return self.left
 
     def get_right_child(self):
         """
         Return the right node in this tree.
+
+        :return: self.right
         """
         return self.right
 
     def get_parent(self):
         """
         Return the parent of this node.
+
+        :return: self.parent
         """
         return self.parent
 
@@ -71,6 +79,8 @@ class PathNode:
         """
         Returns the node directly to the right of this node on the same 
         tree level.
+        
+        :return: self.generation
         """
         return self.generation
 
@@ -120,15 +130,22 @@ class PathNode:
         self.generation = node
 
     def set_level_end(self, boolean):
+        """
+        Setter for level_end
 
+        :param boolean: the new value for level_end
+        """
         self.is_level_end = boolean
 
     def set_is_last_node(self, boolean):
+        """
+        Setter for is_last_node
 
+        :param boolean: the new value for is_last_node
+        """
         self.is_last_node = boolean
 
     def __str__(self):
-
         verts = ""
 
         for num in self.path:
@@ -140,27 +157,14 @@ class PathNode:
         return "" + str(self.path_len) + "(" + verts + ")"
     
     def __eq__(self, other):
+        """
+        Determines whether or not two nodes are the same
+
+        :param other: the other node we are comparing
+        :return: True if the nodes are the same, False otherwise
+        """
         if other is None:
             return False
         return self.path == other.path
 
-"""
-    def insert(self, line):
-        
-        Insert a new node into our tree.
 
-        :param line: The next line read from the file.
-        
-        child_diff = self.left.num_children - self.right.num_children
-        if self.left is None:
-            self.left = PathNode(line)
-        elif self.right is None:
-            self.right = PathNode(line)
-        # TODO Fix the bug that happens when we have child_dif == 1
-        elif child_diff > 1:
-            self.right.insert(line)
-        else:
-            self.left.insert(line)
-        self.num_children = self.num_children + 1
-
-"""

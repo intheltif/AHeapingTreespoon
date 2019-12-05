@@ -1,5 +1,6 @@
 from __future__ import print_function
 from PathNode import PathNode
+import sys
 
 
 class Heap:
@@ -167,13 +168,50 @@ class Heap:
 
         :param node: The node we are currently heapifying
         """
-        if root is None:
-            return
+    #     if root is None:
+    #         return
         
-        # heapify down to the deepest levels first
-        self.heapify(root.left)
-        self.heapify(root.right)
+    #     current = root
 
+    #     while current is not None:
+    #     # heapify down to the deepest levels first
+    #         self.heapify(current.left)
+    #         self.heapify(current.right)
+
+    #         left_weight = self.find_weight(current.left)
+    #         right_weight = self.find_weight(current.right)
+    #         current_weight = self.find_weight(current)
+    #         min_weight = min(left_weight, right_weight, current_weight)
+
+    #         # if the left node is the minimum of the three, swap with that
+    #         if min_weight == left_weight and not min_weight == current_weight:
+    #             self.swap_nodes(current, current.left)
+    #             self.heapify(current)  # is this right?
+    #         elif min_weight == right_weight and not min_weight == current_weight:
+    #             self.swap_nodes(current, current.right)
+    #             self.heapify(current)  # is this right?
+            
+    #         current = current.generation
+
+        current = root
+
+        # while we are not on the deepest level
+        while current.left.left is not None:
+            current = current.left
+        
+        # for each node in the heap
+        next_level_above = current.parent
+        while current is not None:
+            print(current)
+            next_node = current.generation
+            self.should_swap(current)
+            if current.generation is None:
+                current = next_level_above
+                next_level_above = current.parent
+            else:
+                current = next_node
+
+        
     def set_parents(self, root):
         if root is None:
             return
@@ -185,3 +223,54 @@ class Heap:
         
         self.set_parents(root.left)
         self.set_parents(root.right)
+
+    def find_weight(self, node):
+        if node is None:
+            return sys.maxsize
+        else:
+            return node.path_len
+    
+    def swap_nodes(self, parent, child):
+        # have the nodes switch places in the heap
+        if parent.left == child:
+            child.parent = parent.parent
+            child.left, parent.left = parent, child.left
+            parent.parent = child
+            child.right, parent.right = parent.right, child.right
+        else:
+            child.parent = parent.parent
+            child.right, parent.right = parent, child.right
+            parent.parent = child
+            child.left, parent.left = parent.left, child.left
+        
+        # set the new parent's parent to be aware of the change
+        if child.parent is not None:
+            if child.parent.left == parent:
+                child.parent.left = child
+            else:
+                child.parent.right = child
+        
+        # swap the remaining values
+        child.is_root, parent.is_root = parent.is_root, child.is_root
+        child.is_level_end, parent.is_level_end = parent.is_level_end, child.is_level_end
+        child.is_last_node, parent.is_last_node = parent.is_last_node, child.is_last_node
+        child.generation, parent.generation = parent.generation, child.generation
+
+        # if the child is the new root of the tree, inform the root field
+        if child.is_root:
+            self.root = child
+
+    def should_swap(self, node):
+        left_weight = self.find_weight(node.left)
+        right_weight = self.find_weight(node.right)
+        current_weight = self.find_weight(node)
+        min_weight = min(left_weight, right_weight, current_weight)
+
+        if min_weight == left_weight and not min_weight == current_weight:
+            self.swap_nodes(node, node.left)
+            self.should_swap(node)
+        elif min_weight == right_weight and not min_weight == current_weight:
+            self.swap_nodes(node, node.right)
+            self.should_swap(node)
+            
+# BUG: (0,4,1,2,3) and (0, 2, 3) are not swapping

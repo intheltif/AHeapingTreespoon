@@ -20,18 +20,19 @@ class Heap:
         first = 1
         self.read_paths(input_file)
         self.build_complete_tree(first, root_index)
+        self.set_root()
         self.set_level_end()
         self.set_last_node()
         self.set_generation_links(self.temp_path[0])
 
         print('---------- Before Heapify ----------')
-        self.print_tree_levels()
+        self.print_tree_levels(self.root, 0)
         print()  # newline
 
         self.heapify(self.temp_path[0])
 
         print('---------- After Heapify ----------')
-        self.print_tree_levels()
+        self.print_tree_levels(self.root, 0)
 
     def get_temp_path(self):
         """
@@ -82,6 +83,10 @@ class Heap:
         if index <= len(self.temp_path):
             self.build_complete_tree(index+1, index)
 
+    def set_root(self):
+        self.root = self.temp_path[0]
+        self.temp_path[0].is_root = True
+
     def set_level_end(self):
         """ 
         Recursive method that sets isLevelEnd.
@@ -121,25 +126,45 @@ class Heap:
         # last node in the tree must also be the last node of its level
         self.temp_path[-1].is_level_end = True
 
-    def print_tree_levels(self):
+    def print_tree_levels(self, root, level):
         """
         Prints the path lengths from left-to-right at each level in the tree in 
         the form specified by the instructions.
 
         :param root: The root node of this tree or subtree.
         """
-        print('Root:     ', end='')
-        current_level = 0
-        for node in self.temp_path:
-            print(node, end='')
-            if node.is_level_end and not node.is_last_node:
-                print()  # print a new line
-                current_level += 1
-                print('Level ' + str(current_level) + ':  ', end='')
-            elif not node.is_last_node:
-                print('--> ', end='')
+        # print('Root:     ', end='')
+        # current_level = 0
+        # for node in self.temp_path:
+        #     print(node, end='')
+        #     if node.is_level_end and not node.is_last_node:
+        #         print()  # print a new line
+        #         current_level += 1
+        #         print('Level ' + str(current_level) + ':  ', end='')
+        #     elif not node.is_last_node:
+        #         print('--> ', end='')
+        #     else:
+        #         print()  # print a new line
+        if root is None:
+            return
+        
+        if level == 0:
+            print("Root:    ", end="")
+        else:
+            print("Level " + str(level)+ ": ", end="")
+        
+        current = root
+
+        while current is not None:
+            if current.generation is None:
+                print(current, "", end="")
             else:
-                print()  # print a new line
+                print(current, "--> ", end="")
+            current = current.generation
+        
+        print()  # new line
+        
+        self.print_tree_levels(root.left, level + 1)
 
     def find_node_index(self, node):
         for i in range(len(self.temp_path)):

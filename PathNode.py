@@ -28,6 +28,9 @@ class PathNode:
         # True if the node is the right most node
         self.is_last_node = False
 
+        # True if the node is the root of the overall heap
+        self.is_root = False
+
     def get_node_size(self):
         """
         Returns the length of the path list which represents the size of this
@@ -131,7 +134,7 @@ class PathNode:
         # remove the last comma
         verts = verts[:-1]
 
-        return ""+ str(self.path_len) + "(" + verts + ") "
+        return "" + str(self.path_len) + "(" + verts + ")"
     
     def __eq__(self, other):
         if other is None:

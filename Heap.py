@@ -132,19 +132,8 @@ class Heap:
         the form specified by the instructions.
 
         :param root: The root node of this tree or subtree.
+        :param level: The current level of the tree we are on
         """
-        # print('Root:     ', end='')
-        # current_level = 0
-        # for node in self.temp_path:
-        #     print(node, end='')
-        #     if node.is_level_end and not node.is_last_node:
-        #         print()  # print a new line
-        #         current_level += 1
-        #         print('Level ' + str(current_level) + ':  ', end='')
-        #     elif not node.is_last_node:
-        #         print('--> ', end='')
-        #     else:
-        #         print()  # print a new line
         if root is None:
             return
         

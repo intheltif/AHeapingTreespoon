@@ -17,7 +17,7 @@ class PathNode:
         self.parent = None
 
         # Reference to the node directly to the right on the same tree level
-        self.generation = None # left to right sibling or cousin
+        self.generation = None  # left to right sibling or cousin
 
         # The number of children that this node has
         self.num_children = 0

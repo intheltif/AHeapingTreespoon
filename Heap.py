@@ -22,6 +22,7 @@ class Heap:
         self.build_complete_tree(first, root_index)
         self.set_level_end()
         self.set_last_node()
+        self.set_generation_links(self.temp_path[0])
 
         print('---------- Before Heapify ----------')
         self.print_tree_levels()
@@ -89,7 +90,7 @@ class Heap:
         """
         current_node = self.temp_path[0]
         current_node.is_level_end = True
-        while not current_node.right is None:
+        while current_node.right is not None:
             current_node = current_node.right
             current_node.is_level_end = True
 
@@ -101,8 +102,19 @@ class Heap:
 
         :param root: The root node of this tree or subtree.
         """
-        pass
-        # TODO Finish setGenerationLinks function
+
+        if root is None:
+            return
+
+        current = root
+        current_index = self.find_node_index(current)
+
+        while not current.is_level_end:
+            current.generation = self.temp_path[current_index + 1]
+            current = current.generation
+            current_index += 1
+
+        self.set_generation_links(root.left)
 
     def set_last_node(self):
         self.temp_path[-1].is_last_node = True

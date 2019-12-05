@@ -140,12 +140,11 @@ class Heap:
 
         :param node: The node we are currently heapifying
         """
-        # pdb.set_trace()
-        if not node.left is None:
+        if node.left is not None:
             self.heapify(node.left)
-        if not node.right is None:
+        if node.right is not None:
             self.heapify(node.right)
-        if (not node.parent is None) and node.path_len < node.parent.path_len:
+        if (node.parent is not None) and node.path_len < node.parent.path_len:
             # store the parent to avoid corruption as we swap
             parent = node.parent
 

@@ -31,6 +31,9 @@ class PathNode:
         # True if the node is the root of the overall heap
         self.is_root = False
 
+        # This node's parent
+        self.parent = None
+
     def get_node_size(self):
         """
         Returns the length of the path list which represents the size of this

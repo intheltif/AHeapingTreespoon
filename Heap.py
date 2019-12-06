@@ -184,8 +184,7 @@ class Heap:
             # if nodes were swapped, update previous
             # BUG: Find a way to update previous
             if self.should_swap(current, previous):
-                while previous is not None and not previous.parent == current:
-                    previous = previous.parent
+                previous = self.find_previous(current, root)
 
             # if current.generation is None:
             if next_node is None:
@@ -197,7 +196,21 @@ class Heap:
                 previous = current
                 current = next_node
 
-        
+    def find_previous(self, current, root):
+        # Note to Evert:
+        # I hate using recursion to find previous, is there a better solution?
+        # BUG: Is this working?
+        if root is None:
+            return None
+        if root.generation == current:
+            return root
+        is_in_left = self.find_previous(current, root.left)
+        if is_in_left is not None:
+            return is_in_left
+        return self.find_previous(current, root.right)
+
+
+    
     def set_parents(self, root):
         """
         Goes through our entire heap and sets the parents for each node

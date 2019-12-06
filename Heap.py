@@ -319,5 +319,3 @@ class Heap:
         second_node_index = self.find_node_index(second_node)
         self.temp_path[first_node_index] = second_node
         self.temp_path[second_node_index] = first_node
-            
-# BUG: (0,4,1,2,3) and (0, 2, 3) are not swapping

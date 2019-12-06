@@ -184,11 +184,8 @@ class Heap:
             # if nodes were swapped, update previous
             # BUG: Find a way to update previous
             if self.should_swap(current, previous):
-                # if we are the right child
-                if current.parent.right == current:
-                    previous = current.parent.left
-                else:
-                    previous = current.parent.parent.left.right
+                while previous is not None and not previous.parent == current:
+                    previous = previous.parent
 
             # if current.generation is None:
             if next_node is None:

@@ -170,7 +170,7 @@ class Heap:
         :param root: The root of the tree we are heapifying
         """
         current = root
-        previous = None
+        # previous = None
 
         # while we are not on the deepest level
         while current.left is not None and current.left.left is not None:
@@ -183,31 +183,31 @@ class Heap:
 
             # if nodes were swapped, update previous
             # BUG: Find a way to update previous
-            if self.should_swap(current, previous):
-                previous = self.find_previous(current, root)
+            self.should_swap(current)
+                # previous = self.find_previous(current, root)
 
             # if current.generation is None:
             if next_node is None:
                 current = next_level_above
                 if not next_level_above is None:
                     next_level_above = current.parent
-                previous = self.find_previous(current, root)
+                # previous = self.find_previous(current, root)
             else:
                 current = next_node
-                previous = self.find_previous(current, root)
+                # previous = self.find_previous(current, root)
 
-    def find_previous(self, current, root):
+    # def find_previous(self, current, root):
         # Note to Evert:
         # I hate using recursion to find previous, is there a better solution?
         # BUG: Is this working?
-        if root is None:
-            return None
-        if root.generation == current:
-            return root
-        is_in_left = self.find_previous(current, root.left)
-        if is_in_left is not None:
-            return is_in_left
-        return self.find_previous(current, root.right)
+        # if root is None:
+        #     return None
+        # if root.generation == current:
+        #     return root
+        # is_in_left = self.find_previous(current, root.left)
+        # if is_in_left is not None:
+        #     return is_in_left
+        # return self.find_previous(current, root.right)
     
     def set_parents(self, root):
         """
@@ -241,14 +241,14 @@ class Heap:
         else:
             return node.path_len
     
-    def swap_nodes(self, parent, child, previous):
+    def swap_nodes(self, parent, child):
         """
         Swaps two nodes in our heap
 
         :param parent: the parent that is being swapped
         :param child: the child that is being swapped
         """
-        previous = self.find_previous(child, self.root)
+        # previous = self.find_previous(child, self.root)
         if parent.left == child:
             child.parent = parent.parent
             child.left, parent.left = parent, child.left
@@ -260,26 +260,26 @@ class Heap:
             # if previous is not None:
                 # previous.generation = child
                 # previous.right.generation = parent
-            parent_previous = self.find_previous(parent, self.root)
-            if parent_previous is not None:
-                parent_previous.generation = child
+            # parent_previous = self.find_previous(parent, self.root)
+            # if parent_previous is not None:
+            #     parent_previous.generation = child
             
-            child_previous = self.find_previous(child, self.root)
-            if child_previous is not None:
-                child_previous.generation = parent
+            # child_previous = self.find_previous(child, self.root)
+            # if child_previous is not None:
+            #     child_previous.generation = parent
         else:
             child.parent = parent.parent
             child.right, parent.right = parent, child.right
             parent.parent = child
             child.left, parent.left = parent.left, child.left
 
-            parent_previous = self.find_previous(parent, self.root)
-            if parent_previous is not None:
-                parent_previous.generation = child
+            # parent_previous = self.find_previous(parent, self.root)
+            # if parent_previous is not None:
+            #     parent_previous.generation = child
             
-            child_previous = self.find_previous(child, self.root)
-            if child_previous is not None:
-                child_previous.generation = parent
+            # child_previous = self.find_previous(child, self.root)
+            # if child_previous is not None:
+            #     child_previous.generation = parent
                 
             # update previous if necessary
             # if previous is not None:
@@ -310,7 +310,7 @@ class Heap:
         self.temp_path[child_index] = self.temp_path[parent_index]
         self.temp_path[parent_index] = tmp
 
-    def should_swap(self, node, previous):
+    def should_swap(self, node):
         """
         Determines whether or not a node should be swapped with its child
         Swaps them if it should
@@ -325,13 +325,13 @@ class Heap:
 
         if min_weight == left_weight and not min_weight == current_weight:
             # self.swap_in_list(node, node.left)
-            self.swap_nodes(node, node.left, previous)
-            self.should_swap(node, previous)
+            self.swap_nodes(node, node.left)
+            self.should_swap(node)
             return True
         elif min_weight == right_weight and not min_weight == current_weight:
             # self.swap_in_list(node, node.right)
-            self.swap_nodes(node, node.right, previous)
-            self.should_swap(node, previous)
+            self.swap_nodes(node, node.right)
+            self.should_swap(node)
             return True
         return False
         

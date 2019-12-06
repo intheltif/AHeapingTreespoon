@@ -10,7 +10,10 @@ def main():
     Entrypoint to our software
     """
     heap = Heap()
-    heap.go(str(sys.argv[1]))
+    if len(sys.argv) != 2:
+        print('usage: python Driver.py <text_file>')
+    else:
+        heap.go(str(sys.argv[1]))
 
 
 if __name__ == '__main__':

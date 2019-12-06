@@ -48,9 +48,13 @@ class Heap:
         
         :param input_file: The file to read the data from.
         """
-        with open(input_file) as file_to_read:
-            for line in file_to_read:
-                self.temp_path.append(PathNode(line))
+        try:
+            with open(input_file) as file_to_read:
+                for line in file_to_read:
+                    self.temp_path.append(PathNode(line))
+        except IOError:
+            print(input_file, 'could not be found')
+            exit(1)
 
     def build_complete_tree(self, index, parent):
         """
@@ -169,7 +173,7 @@ class Heap:
         previous = None
 
         # while we are not on the deepest level
-        while current.left.left is not None:
+        while current.left is not None and current.left.left is not None:
             current = current.left
         
         # for each node in the heap
@@ -179,7 +183,8 @@ class Heap:
             self.should_swap(current)
             if current.generation is None:
                 current = next_level_above
-                next_level_above = current.parent
+                if not next_level_above is None:
+                    next_level_above = current.parent
                 previous = None
             else:
                 previous = current

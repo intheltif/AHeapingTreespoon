@@ -27,7 +27,7 @@ class Heap:
         print()  # newline
 
         self.heapify(self.root)
-        self.set_generation_links(self.root)
+        # self.set_generation_links(self.root)
 
         print('---------- After Heapify ----------')
         self.print_tree_levels(self.root, 0)
@@ -86,7 +86,7 @@ class Heap:
         Sets the root of the tree
         """
         self.root = self.temp_path[0]
-        self.temp_path[0].is_root = True
+        self.root.is_root = True
 
     def set_level_end(self):
         """ 
@@ -180,8 +180,18 @@ class Heap:
         next_level_above = current.parent
         while current is not None:
             next_node = current.generation
-            self.should_swap(current)
-            if current.generation is None:
+
+            # if nodes were swapped, update previous
+            # BUG: Find a way to update previous
+            if self.should_swap(current, previous):
+                # if we are the right child
+                if current.parent.right == current:
+                    previous = current.parent.left
+                else:
+                    previous = current.parent.parent.left.right
+
+            # if current.generation is None:
+            if next_node is None:
                 current = next_level_above
                 if not next_level_above is None:
                     next_level_above = current.parent
@@ -206,7 +216,7 @@ class Heap:
         if root.right is not None:
             root.right.parent = root
         
-        # Recursively set cparents
+        # Recursively set parents
         self.set_parents(root.left)
         self.set_parents(root.right)
 
@@ -223,7 +233,7 @@ class Heap:
         else:
             return node.path_len
     
-    def swap_nodes(self, parent, child):
+    def swap_nodes(self, parent, child, previous):
         """
         Swaps two nodes in our heap
 
@@ -235,11 +245,21 @@ class Heap:
             child.left, parent.left = parent, child.left
             parent.parent = child
             child.right, parent.right = parent.right, child.right
+
+            # update previous if necessary
+            if previous is not None and previous.right is not None:
+                previous.generation = child
+                previous.right.generation = parent
         else:
             child.parent = parent.parent
             child.right, parent.right = parent, child.right
             parent.parent = child
             child.left, parent.left = parent.left, child.left
+
+            # update previous if necessary
+            if previous is not None:
+                previous.generation = child
+                child.left.generation = parent
         
         # set the new parent's parent to be aware of the change
         if child.parent is not None:
@@ -258,12 +278,13 @@ class Heap:
         if child.is_root:
             self.root = child
 
-    def should_swap(self, node):
+    def should_swap(self, node, previous):
         """
         Determines whether or not a node should be swapped with its child
         Swaps them if it should
 
         :param node: the node we are determining whether or not to swap
+        :return: Whether or not items were swapped
         """
         left_weight = self.find_weight(node.left)
         right_weight = self.find_weight(node.right)
@@ -271,14 +292,18 @@ class Heap:
         min_weight = min(left_weight, right_weight, current_weight)
 
         if min_weight == left_weight and not min_weight == current_weight:
-            self.swap_in_list(node, node.left)
-            self.swap_nodes(node, node.left)
-            self.should_swap(node)
+            # self.swap_in_list(node, node.left)
+            self.swap_nodes(node, node.left, previous)
+            self.should_swap(node, previous)
+            return True
         elif min_weight == right_weight and not min_weight == current_weight:
-            self.swap_in_list(node, node.right)
-            self.swap_nodes(node, node.right)
-            self.should_swap(node)
+            # self.swap_in_list(node, node.right)
+            self.swap_nodes(node, node.right, previous)
+            self.should_swap(node, previous)
+            return True
+        return False
         
+    # Unused in current implementation
     def swap_in_list(self, first_node, second_node):
         first_node_index = self.find_node_index(first_node)
         second_node_index = self.find_node_index(second_node)

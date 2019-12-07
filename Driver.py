@@ -1,9 +1,15 @@
 from Heap import Heap
 import sys
 
-# Value to represent a successful exit
-SUCCESS = 0
+"""
+Driver.py
 
+The driver for our heap application
+
+Author: Evert Ball
+Author: Chris Wolf
+Version: 1.0.0 (December 6, 2019)
+"""
 
 def main():
     """
@@ -15,8 +21,8 @@ def main():
     else:
         heap.go(str(sys.argv[1]))
 
-
+# Runs main
 if __name__ == '__main__':
     main()
-    exit(SUCCESS)
+    exit(0)
 

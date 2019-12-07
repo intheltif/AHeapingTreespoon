@@ -1,17 +1,33 @@
-from __future__ import print_function
+from __future__ import print_function  # in case user is using Python 2
 from PathNode import PathNode
 import sys
 
+"""
+Heap.py
+
+A class to represent a heap in our application
+
+Author: Evert Ball
+Author: Chris Wolf
+Version: 1.0.0 (December 6, 2019)
+"""
 
 class Heap:
     """ A heap. """
     # Temporary storage for the paths starting at temp_path[1]
     def __init__(self):
-        # Create a temp_path with None as first element so that
-        # build_complete_tree math will work correctly.
+        """
+        Create a temp_path with None as first element so that
+        build_complete_tree math will work correctly.
+        """
         self.temp_path = []
 
     def go(self, input_file):
+        """
+        Entrypoint for Heap
+
+        :param input_file: the file we are reading from to create the heap
+        """
         root_index = 0
         first = 1
         self.read_paths(input_file)
@@ -27,7 +43,7 @@ class Heap:
         print()  # newline
 
         self.heapify(self.root)
-        self.set_generation_links(self.root)
+        self.set_generation_links(self.root)  # Reset any incorrect generation links
 
         print('---------- After Heapify ----------')
         self.print_tree_levels(self.root, 0)
@@ -71,13 +87,12 @@ class Heap:
         right_index = 2 * index
 
         if not left_index >= len(self.temp_path):
-            self.temp_path[parent].set_left_child(self.temp_path[left_index])
-            self.temp_path[left_index].set_parent(self.temp_path[parent])
+            self.temp_path[parent].left = self.temp_path[left_index]
+            self.temp_path[left_index].parent = self.temp_path[parent]
         if not right_index >= len(self.temp_path):
-            self.temp_path[parent].set_right_child(self.temp_path[right_index])
-            self.temp_path[right_index].set_parent(self.temp_path[parent])
+            self.temp_path[parent].right = self.temp_path[right_index]
+            self.temp_path[right_index].parent = self.temp_path[parent]
 
-        # self.build_complete_tree(index+1, self.temp_path[index+1])
         if index <= len(self.temp_path):
             self.build_complete_tree(index+1, index)
 
@@ -96,6 +111,8 @@ class Heap:
         """
         current_node = self.temp_path[0]
         current_node.is_level_end = True
+
+        # while there is still a right child
         while current_node.right is not None:
             current_node = current_node.right
             current_node.is_level_end = True
@@ -114,6 +131,7 @@ class Heap:
         current = root
         current_index = self.find_node_index(current)
 
+        # while there is still a node on this level, set the generation
         while not current.is_level_end:
             current.generation = self.temp_path[current_index + 1]
             current = current.generation
@@ -126,7 +144,6 @@ class Heap:
         Sets the last node of the tree
         """
         self.temp_path[-1].is_last_node = True
-        # last node in the tree must also be the last node of its level
         self.temp_path[-1].is_level_end = True
 
     def print_tree_levels(self, root, level):
@@ -140,6 +157,7 @@ class Heap:
         if root is None:
             return
         
+        # print the level
         if level == 0:
             print("Root:    ", end="")
         else:
@@ -147,6 +165,7 @@ class Heap:
         
         current = root
 
+        # while there is still a node in this level
         while current is not None:
             if current.generation is None:
                 print(current, "", end="")
@@ -159,6 +178,12 @@ class Heap:
         self.print_tree_levels(root.left, level + 1)
 
     def find_node_index(self, node):
+        """
+        Finds which index this node is in the temp_path
+
+        :param node: the node we are searching for in temp_path
+        :return: the index this node is in the temp_path
+        """
         for i in range(len(self.temp_path)):
             if node == self.temp_path[i]:
                 return i
@@ -170,7 +195,6 @@ class Heap:
         :param root: The root of the tree we are heapifying
         """
         current = root
-        # previous = None
 
         # while we are not on the deepest level
         while current.left is not None and current.left.left is not None:
@@ -181,34 +205,16 @@ class Heap:
         while current is not None:
             next_node = current.generation
 
-            # if nodes were swapped, update previous
-            # BUG: Find a way to update previous
             self.should_swap(current)
-                # previous = self.find_previous(current, root)
 
             # if current.generation is None:
             if next_node is None:
                 current = next_level_above
                 if not next_level_above is None:
                     next_level_above = current.parent
-                # previous = self.find_previous(current, root)
             else:
                 current = next_node
-                # previous = self.find_previous(current, root)
 
-    # def find_previous(self, current, root):
-        # Note to Evert:
-        # I hate using recursion to find previous, is there a better solution?
-        # BUG: Is this working?
-        # if root is None:
-        #     return None
-        # if root.generation == current:
-        #     return root
-        # is_in_left = self.find_previous(current, root.left)
-        # if is_in_left is not None:
-        #     return is_in_left
-        # return self.find_previous(current, root.right)
-    
     def set_parents(self, root):
         """
         Goes through our entire heap and sets the parents for each node
@@ -248,44 +254,19 @@ class Heap:
         :param parent: the parent that is being swapped
         :param child: the child that is being swapped
         """
-        # previous = self.find_previous(child, self.root)
+        # if the child is the parent's left child
         if parent.left == child:
             child.parent = parent.parent
             child.left, parent.left = parent, child.left
             parent.parent = child
             child.right, parent.right = parent.right, child.right
-
-            # update previous if necessary
-            # if previous is not None and previous.right is not None:
-            # if previous is not None:
-                # previous.generation = child
-                # previous.right.generation = parent
-            # parent_previous = self.find_previous(parent, self.root)
-            # if parent_previous is not None:
-            #     parent_previous.generation = child
-            
-            # child_previous = self.find_previous(child, self.root)
-            # if child_previous is not None:
-            #     child_previous.generation = parent
+        # if the child is the parent's right child
         else:
             child.parent = parent.parent
             child.right, parent.right = parent, child.right
             parent.parent = child
             child.left, parent.left = parent.left, child.left
 
-            # parent_previous = self.find_previous(parent, self.root)
-            # if parent_previous is not None:
-            #     parent_previous.generation = child
-            
-            # child_previous = self.find_previous(child, self.root)
-            # if child_previous is not None:
-            #     child_previous.generation = parent
-                
-            # update previous if necessary
-            # if previous is not None:
-                # previous.generation = parent
-                # child.left.generation = parent
-        
         # set the new parent's parent to be aware of the change
         if child.parent is not None:
             if child.parent.left == parent:
@@ -303,9 +284,9 @@ class Heap:
         if child.is_root:
             self.root = child
         
+        # swap the child and the parent in the temp_path
         child_index = self.find_node_index(child)
         parent_index = self.find_node_index(parent)
-        # self.temp_path[child_index], self.temp_path[parent_index] = self.temp_path[parent_index], self.temp_path[parent_index]
         tmp = self.temp_path[child_index]
         self.temp_path[child_index] = self.temp_path[parent_index]
         self.temp_path[parent_index] = tmp
@@ -318,26 +299,21 @@ class Heap:
         :param node: the node we are determining whether or not to swap
         :return: Whether or not items were swapped
         """
+        # get the weights for the parent and its children
         left_weight = self.find_weight(node.left)
         right_weight = self.find_weight(node.right)
         current_weight = self.find_weight(node)
         min_weight = min(left_weight, right_weight, current_weight)
 
+        # if the left is the smallest
         if min_weight == left_weight and not min_weight == current_weight:
-            # self.swap_in_list(node, node.left)
             self.swap_nodes(node, node.left)
             self.should_swap(node)
             return True
+        # if the right is the smallest
         elif min_weight == right_weight and not min_weight == current_weight:
-            # self.swap_in_list(node, node.right)
             self.swap_nodes(node, node.right)
             self.should_swap(node)
             return True
         return False
         
-    # Unused in current implementation
-    def swap_in_list(self, first_node, second_node):
-        first_node_index = self.find_node_index(first_node)
-        second_node_index = self.find_node_index(second_node)
-        self.temp_path[first_node_index] = second_node
-        self.temp_path[second_node_index] = first_node
